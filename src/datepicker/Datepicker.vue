@@ -11,7 +11,7 @@
         :disabled="disabled"
         :tabindex="disabled ? -1 : 0"
         @keyup="keyUp"
-        @blur="renderView()"
+        @blur="syncInput(), renderView()"
         @focus="renderView(initialView)"
         @click="renderView(initialView)"
       />
@@ -278,7 +278,10 @@ export default defineComponent({
 
       if (closeButton) {
         inputRef.value!.blur()
-      }
+      }      
+    }
+
+    const syncInput = () => {
       if (props.typeable) {
         const parsedDate = parse(
           inputRef.value!.value,
@@ -321,6 +324,7 @@ export default defineComponent({
       initialView,
       log: (e: any) => console.log(e),
       variables,
+      syncInput,
     }
   },
 })
